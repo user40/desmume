@@ -69,6 +69,10 @@ extern HWND DisViewWnd[2];
 #include "gdbstub.h"
 #endif
 
+#ifdef HAVE_STACKTRACE
+#include "stacktrace.h"
+#endif // HAVE_STACKTRACE
+
 //int xxctr=0;
 //#define LOG_ARM9
 //#define LOG_ARM7
@@ -2703,6 +2707,9 @@ void NDS_Reset()
 		arm_jit_reset(CommonSettings.use_jit);
 	#endif
 
+	#ifdef HAVE_STACKTRACE
+		callstack.reset();
+	#endif
 
 	//initialize CP15 specially for this platform
 	//TODO - how much of this is necessary for firmware boot?

@@ -41,6 +41,10 @@
 #include "frontend/modules/osd/agg/agg_osd.h"
 #endif
 
+#ifdef HAVE_STACKTRACE
+#include "stacktrace.h"
+#endif // HAVE_STACKTRACE
+
 #include <assert.h>
 #include <vector>
 #include <map>
@@ -3970,6 +3974,14 @@ DEFINE_LUA_FUNCTION(emu_rerecordcounting, "[enabled]")
 		return 0;
 	}
 }
+
+#ifdef HAVE_STACKTRACE
+DEFINE_LUA_FUNCTION(emu_getcallstack, "")
+{
+	return callstack.pass_to_lua(L);
+}
+#endif
+
 DEFINE_LUA_FUNCTION(movie_getreadonly, "")
 {
 	lua_pushboolean(L, movie_readonly);
@@ -4862,6 +4874,11 @@ static const struct luaL_reg emulib [] =
 	{"set3dtransform", emu_set3dtransform},
 	// alternative names
 //	{"openrom", emu_loadrom},
+
+	#ifdef HAVE_STACKTRACE
+	{"getcallstack", emu_getcallstack},
+	#endif // HAVE_STACKTRACE
+
 	{NULL, NULL}
 };
 static const struct luaL_reg guilib [] =

@@ -51,6 +51,26 @@
     <Import Project="desmume.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_LIBAGG=1;HAVE_JIT=1;HAVE_LUA=1;%(PreprocessorDefinitions);HAVE_STACKTRACE=1</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev+|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_LIBAGG=1;HAVE_JIT=1;HAVE_LUA=1;%(PreprocessorDefinitions);HAVE_STACKTRACE=1</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_LIBAGG=1;HAVE_JIT=1;HAVE_LUA=1;%(PreprocessorDefinitions);HAVE_STACKTRACE=1</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Fastbuild|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_LIBAGG=1;HAVE_JIT=1;HAVE_LUA=1;%(PreprocessorDefinitions);HAVE_STACKTRACE=1</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\addons\slot1comp_mc.cpp" />
     <ClCompile Include="..\..\addons\slot1comp_protocol.cpp" />
@@ -136,6 +156,7 @@
     <ClCompile Include="..\..\slot1.cpp" />
     <ClCompile Include="..\..\slot2.cpp" />
     <ClCompile Include="..\..\SPU.cpp" />
+    <ClCompile Include="..\..\stacktrace.cpp" />
     <ClCompile Include="..\..\texcache.cpp" />
     <ClCompile Include="..\..\thumb_instructions.cpp" />
     <ClCompile Include="..\..\utils\advanscene.cpp" />
@@ -376,6 +397,7 @@
     <ClInclude Include="..\..\libretro-common\include\libretro.h" />
     <ClInclude Include="..\..\libretro-common\include\rthreads\rthreads.h" />
     <ClInclude Include="..\..\metaspu\SoundTouch\FIRFilter.h" />
+    <ClInclude Include="..\..\stacktrace.h" />
     <ClInclude Include="..\..\types.h" />
     <ClInclude Include="..\..\utils\bits.h" />
     <ClInclude Include="..\..\utils\colorspacehandler\colorspacehandler_AltiVec.h">

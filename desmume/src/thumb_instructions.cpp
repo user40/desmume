@@ -29,6 +29,10 @@
 #include "MMU_timing.h"
 #include "utils/bits.h"
 
+#ifdef HAVE_STACKTRACE
+#include "stacktrace.h"
+#endif // HAVE_STACKTRACE
+
 #define cpu (&ARMPROC)
 #define TEMPLATE template<int PROCNUM> 
 
@@ -854,6 +858,12 @@ TEMPLATE static  u32 FASTCALL OP_PUSH_LR(const u32 i)
 	u32 adr = cpu->R[13] - 4;
 	u32 c = 0, j;
 	
+	#ifdef HAVE_STACKTRACE
+	if (PROCNUM == 0) {
+		callstack.on_lr_pushed();
+	}
+	#endif // HAVE_STACKTRACE
+
 	WRITE32(cpu->mem_if->data, adr, cpu->R[14]);
 	c += MMU_memAccessCycles<PROCNUM,32,MMU_AD_WRITE>(adr);
 	adr -= 4;

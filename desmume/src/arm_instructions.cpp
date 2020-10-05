@@ -36,6 +36,10 @@
 #include "MMU_timing.h"
 #include "bios.h"
 
+#ifdef HAVE_STACKTRACE
+#include "stacktrace.h"
+#endif // HAVE_STACKTRACE
+
 #define cpu (&ARMPROC)
 #define TEMPLATE template<int PROCNUM> 
 
@@ -5752,6 +5756,12 @@ TEMPLATE static u32 FASTCALL  OP_STMDB_W(const u32 i)
 	u32 c = 0, b;
 	u32 start = cpu->R[REG_POS(i,16)];
 	
+	#ifdef HAVE_STACKTRACE
+	if (REG_POS(i, 16) == 13 && BIT_N(i, 14) && PROCNUM == 0) {
+		callstack.on_lr_pushed();
+	}
+	#endif // HAVE_STACKTRACE
+
 	for(b=0; b<16; b++)
 	{
 		if(BIT_N(i, 15-b))
